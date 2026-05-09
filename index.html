@@ -14,22 +14,22 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #2563EB;
-            --secondary: #3B82F6;
-            --cta: #F97316;
-            --background: #F8FAFC;
-            --text: #1E293B;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.3);
+        html {
+            height: auto;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
         }
 
         body {
             font-family: 'Didact Gothic', sans-serif;
             background: #000000;
             min-height: 100vh;
+            height: auto;
             overflow-x: hidden;
-            position: relative;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            position: static;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body::before {
@@ -484,7 +484,6 @@
         });
 
         document.addEventListener('touchstart', function(e) {
-            e.preventDefault();
             playAllVideos();
             
             if (!isPlaying) {
@@ -500,7 +499,7 @@
                     }, 3000);
                 }, 2000);
             }
-        }, { passive: false });
+        }, { passive: true });
 
         document.addEventListener('DOMContentLoaded', function() {
             playAllVideos();
