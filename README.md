@@ -1,5 +1,5 @@
 ## Hi there 👋
-[![cycle_transparent.gif](cycle_transparent.gif)](https://github.com/joe-qai/tech-knowledge)
+[![cycle.gif](cycle.gif)](https://github.com/joe-qai/tech-knowledge)
 
 I'm an AI programming enthusiast 🐍, and I also support traditional coding. I'm a big Linux lover 🐧.
 
