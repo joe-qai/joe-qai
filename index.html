@@ -408,7 +408,7 @@
         <section class="hero-section">
             <div class="glass-container">
                 <div class="dragon-wrapper">
-                    <img src="cycle_transparent.gif" alt="Golden Dragon Animation" class="dragon-gif" style="display:block; width:100%; max-width:700px;">
+                    <img src="cycle_transparent.gif" alt="Golden Dragon Animation" class="dragon-gif" style="display:block; width:100%; max-width:700px;" id="heroImg">
                     <h2 class="dragon-title">Golden Dragon</h2>
                     <p class="dragon-description">
                         A magnificent golden dragon, symbolizing power, wisdom, and good fortune in Chinese mythology.
@@ -440,7 +440,7 @@
             <div class="gallery-grid">
                 <div class="gallery-item">
                     <div class="gallery-card">
-                        <img src="cycle_transparent.gif" alt="Cycle Animation" class="gallery-img">
+                        <img src="cycle_transparent.gif" alt="Cycle Animation" class="gallery-img" id="galleryImg1">
                         <div class="gallery-overlay">
                             <span class="gallery-caption">Cycle Animation</span>
                         </div>
@@ -448,7 +448,7 @@
                 </div>
                 <div class="gallery-item">
                     <div class="gallery-card">
-                        <img src="left_transparent.gif" alt="Left Animation" class="gallery-img">
+                        <img src="left_transparent.gif" alt="Left Animation" class="gallery-img" id="galleryImg2">
                         <div class="gallery-overlay">
                             <span class="gallery-caption">Left Animation</span>
                         </div>
@@ -456,7 +456,7 @@
                 </div>
                 <div class="gallery-item">
                     <div class="gallery-card">
-                        <img src="right_transparent.gif" alt="Right Animation" class="gallery-img">
+                        <img src="right_transparent.gif" alt="Right Animation" class="gallery-img" id="galleryImg3">
                         <div class="gallery-overlay">
                             <span class="gallery-caption">Right Animation</span>
                         </div>
@@ -464,7 +464,7 @@
                 </div>
                 <div class="gallery-item">
                     <div class="gallery-card">
-                        <img src="Dragon_transparent.gif" alt="Dragon Animation" class="gallery-img">
+                        <img src="Dragon_transparent.gif" alt="Dragon Animation" class="gallery-img" id="galleryImg4">
                         <div class="gallery-overlay">
                             <span class="gallery-caption">Dragon Animation</span>
                         </div>
@@ -487,6 +487,14 @@
     </audio>
 
     <script>
+        function reloadGif(img) {
+            if (img) {
+                var src = img.src.split('?')[0];
+                img.src = '';
+                img.src = src + '?t=' + new Date().getTime();
+            }
+        }
+
         const audio = document.getElementById('dragonSound');
         let isPlaying = false;
 
@@ -495,7 +503,7 @@
                 isPlaying = true;
                 audio.currentTime = 0;
                 audio.play().catch(e => console.log('Audio play failed:', e));
-                
+
                 setTimeout(() => {
                     audio.currentTime = 0;
                     audio.play().catch(e => console.log('Second audio play failed:', e));
@@ -505,6 +513,27 @@
                 }, 2000);
             }
         });
+
+        document.addEventListener('WeixinJSBridgeReady', function() {
+            document.querySelectorAll('img[src*=".gif"]').forEach(function(img) {
+                reloadGif(img);
+            });
+        });
+
+        document.addEventListener('touchstart', function() {
+            document.querySelectorAll('img[src*=".gif"]').forEach(function(img) {
+                reloadGif(img);
+            });
+        }, { passive: true });
+
+        setInterval(function() {
+            document.querySelectorAll('img[src*=".gif"]').forEach(function(img) {
+                var rect = img.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    reloadGif(img);
+                }
+            });
+        }, 3000);
     </script>
 </body>
 </html>
