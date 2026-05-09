@@ -408,7 +408,7 @@
         <section class="hero-section">
             <div class="glass-container">
                 <div class="dragon-wrapper">
-                    <video src="cycle_transparent.webm" autoplay loop muted playsinline class="dragon-gif" style="display:block; width:100%; max-width:700px;"></video>
+                    <video id="heroVideo" src="cycle_transparent.webm" autoplay loop muted playsinline class="dragon-gif" style="display:block; width:100%; max-width:700px;" poster="cycle_transparent.gif"></video>
                     <h2 class="dragon-title">Golden Dragon</h2>
                     <p class="dragon-description">
                         A magnificent golden dragon, symbolizing power, wisdom, and good fortune in Chinese mythology.
@@ -440,7 +440,7 @@
             <div class="gallery-grid">
                 <div class="gallery-item">
                     <div class="gallery-card">
-                        <video src="cycle_transparent.webm" autoplay loop muted playsinline class="gallery-img"></video>
+                        <video id="galleryVideo1" src="cycle_transparent.webm" autoplay loop muted playsinline class="gallery-img" poster="cycle_transparent.gif"></video>
                         <div class="gallery-overlay">
                             <span class="gallery-caption">Cycle Animation</span>
                         </div>
@@ -448,7 +448,7 @@
                 </div>
                 <div class="gallery-item">
                     <div class="gallery-card">
-                        <video src="left_transparent.webm" autoplay loop muted playsinline class="gallery-img"></video>
+                        <video id="galleryVideo2" src="left_transparent.webm" autoplay loop muted playsinline class="gallery-img" poster="left_transparent.gif"></video>
                         <div class="gallery-overlay">
                             <span class="gallery-caption">Left Animation</span>
                         </div>
@@ -456,7 +456,7 @@
                 </div>
                 <div class="gallery-item">
                     <div class="gallery-card">
-                        <video src="right_transparent.webm" autoplay loop muted playsinline class="gallery-img"></video>
+                        <video id="galleryVideo3" src="right_transparent.webm" autoplay loop muted playsinline class="gallery-img" poster="right_transparent.gif"></video>
                         <div class="gallery-overlay">
                             <span class="gallery-caption">Right Animation</span>
                         </div>
@@ -464,7 +464,7 @@
                 </div>
                 <div class="gallery-item">
                     <div class="gallery-card">
-                        <video src="Dragon_transparent.webm" autoplay loop muted playsinline class="gallery-img"></video>
+                        <video id="galleryVideo4" src="Dragon_transparent.webm" autoplay loop muted playsinline class="gallery-img" poster="Dragon_transparent.gif"></video>
                         <div class="gallery-overlay">
                             <span class="gallery-caption">Dragon Animation</span>
                         </div>
@@ -490,7 +490,18 @@
         const audio = document.getElementById('dragonSound');
         let isPlaying = false;
 
+        function playAllVideos() {
+            document.querySelectorAll('video').forEach(function(video) {
+                video.currentTime = 0;
+                video.play().catch(function(e) {
+                    console.log('Video play failed:', e);
+                });
+            });
+        }
+
         document.addEventListener('click', function() {
+            playAllVideos();
+            
             if (!isPlaying) {
                 isPlaying = true;
                 audio.currentTime = 0;
@@ -508,6 +519,8 @@
 
         document.addEventListener('touchstart', function(e) {
             e.preventDefault();
+            playAllVideos();
+            
             if (!isPlaying) {
                 isPlaying = true;
                 audio.currentTime = 0;
@@ -522,6 +535,18 @@
                 }, 2000);
             }
         }, { passive: false });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            playAllVideos();
+        });
+
+        window.addEventListener('load', function() {
+            playAllVideos();
+        });
+
+        document.addEventListener('WeixinJSBridgeReady', function() {
+            playAllVideos();
+        });
     </script>
 </body>
 </html>
